@@ -1,10 +1,10 @@
 package www.film.microservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 
 @Entity
@@ -12,16 +12,31 @@ public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String genreNaam;
+    private String naam;
+
+
 
     public Genre(){
 
     }
 
-    public Genre(Integer id, String genreNaam) {
-        this.id = id;
-        this.genreNaam = genreNaam;
+    public Genre( String naam) {
+        this.naam = naam;
     }
+
+
+
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+
+
 
     public Integer getId() {
         return id;
@@ -32,12 +47,4 @@ public class Genre {
     }
 
 
-
-    public String getGenreNaam() {
-        return genreNaam;
-    }
-
-    public void setGenreNaam(String genreNaam) {
-        this.genreNaam = genreNaam;
-    }
 }
