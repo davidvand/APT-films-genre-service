@@ -8,8 +8,8 @@ import www.film.microservice.model.Genre;
 import java.util.List;
 
 public interface FilmGenreRepository extends JpaRepository<Film_Genre, String> {
-    @Query("SELECT u FROM Film_Genre u WHERE u.film_id = ?1")
-    List<Film_Genre> findAllByFilm_id(Integer film_id);
-    @Query("SELECT u FROM Film_Genre u WHERE u.genre_id = ?1")
-    List<Film_Genre> findAllByGenre_id(Integer genre_id);
+    @Query("SELECT u FROM Film_Genre u WHERE u.film_naam = ?1")
+    List<Film_Genre> findAllByFilm_id(String film_naam);
+    @Query("SELECT u FROM Film_Genre u WHERE u.genre_naam = ?1")
+    List<Film_Genre> findAllByGenre_id(String genre_naam);
 }

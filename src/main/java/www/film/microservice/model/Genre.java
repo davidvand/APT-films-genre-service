@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 public class Genre {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String naam;
 
@@ -22,6 +21,10 @@ public class Genre {
 
     public Genre( String naam) {
         this.naam = naam;
+    }
+
+    public Genre(Integer id, String naam) {
+        this.id = id; this.naam = naam;
     }
 
 

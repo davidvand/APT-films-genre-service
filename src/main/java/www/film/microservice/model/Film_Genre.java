@@ -2,15 +2,10 @@ package www.film.microservice.model;
 
 import javax.persistence.*;
 
-@Entity
 public class Film_Genre {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Integer film_id;
-    private  Integer genre_id;
-
-
+    private String film_naam;
+    private  String genre_naam;
 
 
 
@@ -20,9 +15,15 @@ public class Film_Genre {
 
     }
 
-    public Film_Genre(Integer genre_id, Integer film_id) {
-        this.genre_id = genre_id;
-        this.film_id = film_id;
+    public Film_Genre(String film_naam, String genre_naam) {
+        this.film_naam = film_naam;
+        this.genre_naam = genre_naam;
+    }
+
+    public Film_Genre(Integer id, String film_naam, String genre_naam) {
+        this.id = id;
+        this.film_naam = film_naam;
+        this.genre_naam = genre_naam;
     }
 
     public Integer getId() {
@@ -34,19 +35,19 @@ public class Film_Genre {
     }
 
 
-    public Integer getFilmid() {
-        return film_id;
+    public String getFilm_naam() {
+        return film_naam;
     }
 
-    public void setFilmid(Integer filmid) {
-        this.film_id = filmid;
+    public void setFilm_naam(String film_naam) {
+        this.film_naam = film_naam;
     }
 
-    public Integer getGenre_id() {
-        return genre_id;
+    public String getGenre_naam() {
+        return genre_naam;
     }
 
-    public void setGenre_id(Integer genre_id) {
-        this.genre_id = genre_id;
+    public void setGenre_naam(String genre_naam) {
+        this.genre_naam = genre_naam;
     }
 }

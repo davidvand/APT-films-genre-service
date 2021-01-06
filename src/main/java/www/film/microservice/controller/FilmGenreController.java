@@ -19,25 +19,15 @@ public class FilmGenreController {
     @Autowired
     private GenreRepository genreRepository;
 
-    @PostConstruct
-    public void fillDB(){
-        if(FilmGenreRepository.count()==0){
-            FilmGenreRepository.save(new Film_Genre(12,1));
-            FilmGenreRepository.save(new Film_Genre(13,2));
-            FilmGenreRepository.save(new Film_Genre(14,3));
-            FilmGenreRepository.save(new Film_Genre(12,4));
 
-        }
+    @GetMapping("/FilmGenres/film/{naam}")
+    public List<Film_Genre> getFilmGenreByFilmId(@PathVariable String naam){
+        return FilmGenreRepository.findAllByFilm_id(naam);
     }
 
-    @GetMapping("/FilmGenres/film/{id}")
-    public List<Film_Genre> getFilmGenreByFilmId(@PathVariable Integer id){
-        return FilmGenreRepository.findAllByFilm_id(id);
-    }
-
-    @GetMapping("/FilmGenres/genre/{id}")
-    public List<Film_Genre> getFilmGenresByGenreId(@PathVariable Integer id){
-        return FilmGenreRepository.findAllByGenre_id(id);
+    @GetMapping("/FilmGenres/genre/{naam}")
+    public List<Film_Genre> getFilmGenresByGenreId(@PathVariable String naam){
+        return FilmGenreRepository.findAllByGenre_id(naam);
     }
 
     @PostMapping("/FilmGenres")

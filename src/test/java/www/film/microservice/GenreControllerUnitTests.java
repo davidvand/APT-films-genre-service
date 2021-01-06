@@ -29,29 +29,95 @@ public class GenreControllerUnitTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private FilmGenreRepository genreRepository;
+    private GenreRepository genreRepository;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void givenFilmGenre_whenGetFilmGenresByGenreId_thenReturnJsonFilmGenre() throws Exception {
-        Film_Genre filmGenreGenre1Film1 = new Film_Genre(12,1);
-        Film_Genre filmGenreGenre1Film2 = new Film_Genre(12,4);
+    public void givenGenre_whenGetGenreByNaam_thenReturnJsonGenres() throws Exception {
+        Genre genre1 = new Genre(001,"Actie");
 
-        List<Film_Genre> film_genreList = new ArrayList<>();
-        film_genreList.add(filmGenreGenre1Film1);
-        film_genreList.add(filmGenreGenre1Film2);
+        List<Genre> genreList = new ArrayList<>();
+        genreList.add(genre1);
 
 
-        given(genreRepository.findAllByGenre_id(12)).willReturn(film_genreList);
+        given(genreRepository.findGenresByNaam("Actie")).willReturn(genreList);
 
-        mockMvc.perform(get("/FilmGenres/genre/{id}",12))
+
+        mockMvc.perform(get("/genres/naam/{naam}","Actie"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                //.andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].genre_id",is(12)))
-                .andExpect(jsonPath("$[0].filmid",is(1)))
-                .andExpect(jsonPath("$[1].genre_id",is(12)))
-                .andExpect(jsonPath("$[1].filmid",is(4)));
+                .andExpect(jsonPath("$[0].naam",is("Actie")));
+    }
+
+    @Test
+    public void givenGenre_whenGetGenreById_thenReturnJsonGenre() throws Exception {
+
+        Genre genre1 = new Genre(001,"Actie");
+
+
+        given(genreRepository.findGenresById(001)).willReturn(genre1);
+
+        mockMvc.perform(get("/genres/{id}",1))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.naam",is("Actie")));
+    }
+
+    @Test
+    public void whenPostGenre_thenReturnJsonGenre() throws Exception {
+        Genre genreWestern = new Genre(4,"Western");
+
+        mockMvc.perform(post("/genres")
+                .content(mapper.writeValueAsString(genreWestern))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(4)))
+                .andExpect(jsonPath("$.naam", is("Western")));
+    }
+
+    @Test
+    public void givenGenre_whenPutGenre_thenReturnJsonGenre() throws Exception {
+
+        Genre genreComedy = new Genre(2,"Comedy");
+
+
+        given(genreRepository.findGenresById(002)).willReturn(genreComedy);
+
+        Genre updatedGenre = new Genre(2,"Comedy");
+
+
+
+        mockMvc.perform(put("/genres")
+                .content(mapper.writeValueAsString(updatedGenre))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(2)))
+                .andExpect(jsonPath("$.naam", is("Comedy")));
+    }
+
+    @Test
+    public void givenGenre_whenDeleteGenre_thenStatusOk() throws Exception {
+
+        Genre genreToBeDeleted = new Genre(4,"Western");
+
+
+        given(genreRepository.findGenresById(4)).willReturn(genreToBeDeleted);
+
+        mockMvc.perform(delete("/genres/{id}/", 4)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenNoGenre_whenDeleteGenre_thenStatusNotFound() throws Exception {
+        given(genreRepository.findGenresById(999)).willReturn(null);
+
+
+        mockMvc.perform(delete("/genres/{id}", 999)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isMethodNotAllowed());
     }
 }
