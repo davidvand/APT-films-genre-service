@@ -2,7 +2,9 @@ package www.film.microservice.model;
 
 import javax.persistence.*;
 
+@Entity
 public class Film_Genre {
+    @Id
     private Integer id;
     private String film_naam;
     private  String genre_naam;
@@ -19,6 +21,7 @@ public class Film_Genre {
         this.film_naam = film_naam;
         this.genre_naam = genre_naam;
     }
+
 
     public Film_Genre(Integer id, String film_naam, String genre_naam) {
         this.id = id;

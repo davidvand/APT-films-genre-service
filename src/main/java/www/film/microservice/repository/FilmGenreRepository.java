@@ -9,7 +9,12 @@ import java.util.List;
 
 public interface FilmGenreRepository extends JpaRepository<Film_Genre, String> {
     @Query("SELECT u FROM Film_Genre u WHERE u.film_naam = ?1")
-    List<Film_Genre> findAllByFilm_id(String film_naam);
+    List<Film_Genre> findAllByFilm(String film_naam);
     @Query("SELECT u FROM Film_Genre u WHERE u.genre_naam = ?1")
-    List<Film_Genre> findAllByGenre_id(String genre_naam);
+    List<Film_Genre> findAllByGenre(String genre_naam);
+    @Query("SELECT u FROM Film_Genre u WHERE u.genre_naam = ?1 AND u.film_naam = ?2")
+    Film_Genre findByFilm_naamAndGenre_naam(String genre_naam, String film_naam);
+    Film_Genre findById(Integer id);
+
+
 }
