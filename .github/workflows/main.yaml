@@ -37,10 +37,9 @@ jobs:
         uses: harmon758/postgresql-action@v1
         with:
          postgresql version: 11
-        env:
-          INPUT_POSTGRESQL_DB: postgresdb
-          INPUT_POSTGRESQL_USER: postgres
-          INPUT_POSTGRESQL_PASSWORD: admin
+         postgresql db: postgresdb
+         postgresql user: postgres
+         postgresql password: admin
 
       - name: Test and build project
         run: mvn -f pom.xml clean install
