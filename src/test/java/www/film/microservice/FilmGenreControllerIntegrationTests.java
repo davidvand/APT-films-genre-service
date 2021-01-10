@@ -39,7 +39,7 @@ public class FilmGenreControllerIntegrationTests {
 
     @BeforeEach
     public void beforeAllTests() {
-        //FilmGenreRepository.deleteAll();
+        filmGenreRepository.deleteAll();
         filmGenreRepository.save(FilmGenre1);
         filmGenreRepository.save(FilmGenre2);
     }
@@ -47,8 +47,9 @@ public class FilmGenreControllerIntegrationTests {
     @AfterEach
     public void afterAllTests() {
         //Watch out with deleteAll() methods when you have other data in the test database!
-        filmGenreRepository.delete(FilmGenre1);
-        filmGenreRepository.delete(FilmGenre2);
+        //filmGenreRepository.deleteAll();
+        //filmGenreRepository.delete(FilmGenre1);
+        //filmGenreRepository.delete(FilmGenre2);
     }
 
     @Test
@@ -100,7 +101,7 @@ public class FilmGenreControllerIntegrationTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(4)))
+                .andExpect(jsonPath("$.id", is(3)))
                 .andExpect(jsonPath("$.film_naam", is("Extraction")))
                 .andExpect(jsonPath("$.genre_naam", is("Thriller")));
     }
@@ -123,7 +124,7 @@ public class FilmGenreControllerIntegrationTests {
     @Test
     public void givenFilmGenre_whenDeleteFilmGenre_thenStatusOk() throws Exception {
 
-        mockMvc.perform(delete("/filmGenres/{id}/", 4)
+        mockMvc.perform(delete("/filmGenres/{id}/", 2)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

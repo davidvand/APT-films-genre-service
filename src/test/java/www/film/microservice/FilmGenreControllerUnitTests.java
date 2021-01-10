@@ -74,6 +74,12 @@ public class FilmGenreControllerUnitTests {
     @Test
     public void givenFilmGenre_whenGetFilmGenreByGenreNaamAndFilmNaam_thenReturnJsonFilmGenre() throws Exception {
 
+        Film_Genre filmGenre = new Film_Genre(001, "Taken","Actie");
+
+
+
+        given(filmGenreRepository.findByFilm_naamAndGenre_naam("Taken","Actie")).willReturn(filmGenre);
+
         mockMvc.perform(get("/filmGenres/{film}/{genre}","Taken","Actie"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -86,6 +92,12 @@ public class FilmGenreControllerUnitTests {
     @Test
     public void givenFilmGenre_whenGetFilmGenreById_thenReturnJsonFilmGenre() throws Exception {
 
+        Film_Genre filmGenre = new Film_Genre(001, "Taken","Actie");
+
+
+
+        given(filmGenreRepository.findById(1)).willReturn(filmGenre);
+
         mockMvc.perform(get("/filmGenres/{id}",1))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -95,7 +107,7 @@ public class FilmGenreControllerUnitTests {
 
     @Test
     public void whenPostFilmGenre_thenReturnJsonFilmGenre() throws Exception {
-        Film_Genre FilmGenreWestern = new Film_Genre(3,"Extraction","Thriller");
+        Film_Genre FilmGenreWestern = new Film_Genre(4,"Extraction","Thriller");
 
         mockMvc.perform(post("/filmGenres")
                 .content(mapper.writeValueAsString(FilmGenreWestern))
@@ -112,6 +124,9 @@ public class FilmGenreControllerUnitTests {
 
         Film_Genre updatedFilmGenre = new Film_Genre(1,"Taken","Thriller");
 
+        given(filmGenreRepository.findByFilm_naamAndGenre_naam("Taken","Actie")).willReturn(updatedFilmGenre);
+
+
         mockMvc.perform(put("/filmGenres")
                 .content(mapper.writeValueAsString(updatedFilmGenre))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -125,6 +140,12 @@ public class FilmGenreControllerUnitTests {
     @Test
     public void givenFilmGenre_whenDeleteFilmGenre_thenStatusOk() throws Exception {
 
+        Film_Genre TobeDeleted = new Film_Genre(4,"Extraction","Thriller");
+
+
+        given(filmGenreRepository.findById(4)).willReturn(TobeDeleted);
+
+
         mockMvc.perform(delete("/filmGenres/{id}/", 4)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -132,6 +153,12 @@ public class FilmGenreControllerUnitTests {
 
     @Test
     public void givenNoFilmGenre_whenDeleteFilmGenre_thenStatusNotFound() throws Exception {
+
+        Film_Genre TobeDeleted = new Film_Genre(999,"Movie 22","Thriller");
+
+
+        given(filmGenreRepository.findById(1)).willReturn(TobeDeleted);
+
 
         mockMvc.perform(delete("/filmGenres/{id}", 999)
                 .contentType(MediaType.APPLICATION_JSON))

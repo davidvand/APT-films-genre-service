@@ -18,8 +18,14 @@ public class FilmGenreController {
     @Autowired
     private FilmGenreRepository FilmGenreRepository;
 
-    @Autowired
-    private GenreRepository genreRepository;
+    @PostConstruct
+    public void fillDB(){
+        if(FilmGenreRepository.count()==0){
+            FilmGenreRepository.save(new Film_Genre(001, "Taken","Actie"));
+            FilmGenreRepository.save(new Film_Genre(002, "Movie 2","Comedy"));
+            FilmGenreRepository.save(new Film_Genre(003,"Movie 3","Thriller"));
+        }
+    }
 
 
     @GetMapping("/filmGenres/film/{naam}")
@@ -34,7 +40,12 @@ public class FilmGenreController {
 
     @GetMapping("/filmGenres/{film}/{genre}")
     public Film_Genre getFilmGenresByFilmNaamGenreNaam(@PathVariable String film, @PathVariable String genre){
-        return FilmGenreRepository.findByFilm_naamAndGenre_naam(genre,film);
+        return FilmGenreRepository.findByFilm_naamAndGenre_naam(film,genre);
+    }
+
+    @GetMapping("/filmGenres/{id}")
+    public Film_Genre getFilmGenreById(@PathVariable Integer id){
+        return FilmGenreRepository.findById(id);
     }
 
 
@@ -47,7 +58,7 @@ public class FilmGenreController {
 
     @PutMapping("/filmGenres")
     public Film_Genre updateFilmGenre(@RequestBody Film_Genre updatedGenre){
-        Film_Genre retrievedFilmGenre = FilmGenreRepository.findById(updatedGenre.getId());
+        Film_Genre retrievedFilmGenre = updatedGenre;
 
         retrievedFilmGenre.setGenre_naam(updatedGenre.getGenre_naam());
 
@@ -57,7 +68,7 @@ public class FilmGenreController {
     }
 
     @DeleteMapping("/filmGenres/{id}/")
-    public ResponseEntity deleteGenre(@PathVariable Integer id){
+    public ResponseEntity deleteFilmGenre(@PathVariable Integer id){
         Film_Genre filmGenre = FilmGenreRepository.findById(id);
         if(filmGenre!=null){
             FilmGenreRepository.delete(filmGenre);
