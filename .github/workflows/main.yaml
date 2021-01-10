@@ -37,7 +37,7 @@ jobs:
         uses: harmon758/postgresql-action@v1
         with:
          postgresql version: 11
-         postgresql db: postgresdb
+         postgresql db: postgres
          postgresql user: postgres
          postgresql password: admin
 
