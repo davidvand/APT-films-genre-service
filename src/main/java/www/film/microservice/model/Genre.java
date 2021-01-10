@@ -2,7 +2,6 @@ package www.film.microservice.model;
 
 import javax.persistence.*;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 

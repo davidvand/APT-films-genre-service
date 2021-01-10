@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  DB_HOST:localhost
-
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -40,6 +37,12 @@ jobs:
         uses: harmon758/postgresql-action@v1
         with:
          postgresql version: 11
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
 
       - name: Test and build project
         run: mvn -f pom.xml clean install
