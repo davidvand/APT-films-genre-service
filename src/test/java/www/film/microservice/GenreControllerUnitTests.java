@@ -37,32 +37,18 @@ public class GenreControllerUnitTests {
     public void givenGenre_whenGetGenreByNaam_thenReturnJsonGenres() throws Exception {
         Genre genre1 = new Genre(001,"Actie");
 
-        List<Genre> genreList = new ArrayList<>();
-        genreList.add(genre1);
 
 
-        given(genreRepository.findGenresByNaam("Actie")).willReturn(genreList);
+        given(genreRepository.findGenresByNaam("Actie")).willReturn(genre1);
 
 
         mockMvc.perform(get("/genres/naam/{naam}","Actie"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].naam",is("Actie")));
-    }
-
-    @Test
-    public void givenGenre_whenGetGenreById_thenReturnJsonGenre() throws Exception {
-
-        Genre genre1 = new Genre(001,"Actie");
-
-
-        given(genreRepository.findGenresById(001)).willReturn(genre1);
-
-        mockMvc.perform(get("/genres/{id}",1))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.naam",is("Actie")));
     }
+
+
 
     @Test
     public void whenPostGenre_thenReturnJsonGenre() throws Exception {
@@ -118,6 +104,6 @@ public class GenreControllerUnitTests {
 
         mockMvc.perform(delete("/genres/{id}", 999)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isNotFound());
     }
 }

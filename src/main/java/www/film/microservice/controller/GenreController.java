@@ -25,14 +25,10 @@ public class GenreController {
     }
 
     @GetMapping("/genres/naam/{naam}")
-    public List<Genre> getGenreByNaam(@PathVariable String naam){
+    public Genre getGenreByNaam(@PathVariable String naam){
         return genreRepository.findGenresByNaam(naam);
     }
 
-    @GetMapping("/genres/{id}")
-    public Genre getGenreByID(@PathVariable Integer id){
-        return genreRepository.findGenresById(id);
-    }
 
     @PostMapping("/genres")
     public Genre addGenre(@RequestBody Genre genre){

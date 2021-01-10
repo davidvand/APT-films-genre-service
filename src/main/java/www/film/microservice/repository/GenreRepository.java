@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, String> {
     Genre findGenresById(Integer id);
-    List<Genre> findGenresByNaam(String naam);
+    Genre findGenresByNaam(String naam);
 }

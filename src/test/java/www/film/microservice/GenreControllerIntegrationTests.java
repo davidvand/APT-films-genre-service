@@ -53,17 +53,9 @@ public class GenreControllerIntegrationTests {
         mockMvc.perform(get("/genres/naam/{naam}","Actie"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].naam",is("Actie")));
-    }
-
-    @Test
-    public void givenGenre_whenGetGenreById_thenReturnJsonGenre() throws Exception {
-
-        mockMvc.perform(get("/genres/{id}",1))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.naam",is("Actie")));
     }
+
 
     @Test
     public void whenPostGenre_thenReturnJsonGenre() throws Exception {
@@ -105,7 +97,7 @@ public class GenreControllerIntegrationTests {
 
         mockMvc.perform(delete("/genres/{id}", 999)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isNotFound());
     }
 
 

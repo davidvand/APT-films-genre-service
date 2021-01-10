@@ -10,6 +10,7 @@ import java.util.List;
 public class Genre {
     @Id
     private Integer id;
+    @Column(unique = true)
     private String naam;
 
 
@@ -18,9 +19,6 @@ public class Genre {
 
     }
 
-    public Genre( String naam) {
-        this.naam = naam;
-    }
 
     public Genre(Integer id, String naam) {
         this.id = id; this.naam = naam;

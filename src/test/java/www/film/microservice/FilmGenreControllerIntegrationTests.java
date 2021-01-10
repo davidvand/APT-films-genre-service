@@ -82,15 +82,6 @@ public class FilmGenreControllerIntegrationTests {
 
 
 
-    @Test
-    public void givenFilmGenre_whenGetFilmGenreById_thenReturnJsonFilmGenre() throws Exception {
-
-        mockMvc.perform(get("/filmGenres/{id}",1))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.film_naam",is("Taken")))
-                .andExpect(jsonPath("$.genre_naam",is("Actie")));
-    }
 
     @Test
     public void whenPostFilmGenre_thenReturnJsonFilmGenre() throws Exception {
@@ -124,7 +115,7 @@ public class FilmGenreControllerIntegrationTests {
     @Test
     public void givenFilmGenre_whenDeleteFilmGenre_thenStatusOk() throws Exception {
 
-        mockMvc.perform(delete("/filmGenres/{id}/", 2)
+        mockMvc.perform(delete("/filmGenres/{film}/{genre}", "Taken","Actie")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -134,7 +125,7 @@ public class FilmGenreControllerIntegrationTests {
 
         mockMvc.perform(delete("/filmGenres/{id}", 999)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isNotFound());
     }
 
 

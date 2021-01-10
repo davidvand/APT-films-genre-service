@@ -89,21 +89,6 @@ public class FilmGenreControllerUnitTests {
 
 
 
-    @Test
-    public void givenFilmGenre_whenGetFilmGenreById_thenReturnJsonFilmGenre() throws Exception {
-
-        Film_Genre filmGenre = new Film_Genre(001, "Taken","Actie");
-
-
-
-        given(filmGenreRepository.findById(1)).willReturn(filmGenre);
-
-        mockMvc.perform(get("/filmGenres/{id}",1))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.film_naam",is("Taken")))
-                .andExpect(jsonPath("$.genre_naam",is("Actie")));
-    }
 
     @Test
     public void whenPostFilmGenre_thenReturnJsonFilmGenre() throws Exception {
@@ -140,13 +125,13 @@ public class FilmGenreControllerUnitTests {
     @Test
     public void givenFilmGenre_whenDeleteFilmGenre_thenStatusOk() throws Exception {
 
-        Film_Genre TobeDeleted = new Film_Genre(4,"Extraction","Thriller");
+        Film_Genre TobeDeleted = new Film_Genre(1,"Extraction","Actie");
 
 
-        given(filmGenreRepository.findById(4)).willReturn(TobeDeleted);
+        given(filmGenreRepository.findByFilm_naamAndGenre_naam("Extraction","Actie")).willReturn(TobeDeleted);
 
 
-        mockMvc.perform(delete("/filmGenres/{id}/", 4)
+        mockMvc.perform(delete("/filmGenres/{film}/{genre}", "Extraction","Actie")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -157,11 +142,11 @@ public class FilmGenreControllerUnitTests {
         Film_Genre TobeDeleted = new Film_Genre(999,"Movie 22","Thriller");
 
 
-        given(filmGenreRepository.findById(1)).willReturn(TobeDeleted);
+        given(filmGenreRepository.findByFilm_naamAndGenre_naam("Movie 22","Thriller")).willReturn(null);
 
 
-        mockMvc.perform(delete("/filmGenres/{id}", 999)
+        mockMvc.perform(delete("/filmGenres/{film}/{genre}", "Movie 22","Thriller")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isNotFound());
     }
 }

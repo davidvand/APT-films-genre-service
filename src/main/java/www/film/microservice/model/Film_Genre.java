@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Film_Genre {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String film_naam;
     private  String genre_naam;
@@ -15,11 +16,6 @@ public class Film_Genre {
     public  Film_Genre()
     {
 
-    }
-
-    public Film_Genre(String film_naam, String genre_naam) {
-        this.film_naam = film_naam;
-        this.genre_naam = genre_naam;
     }
 
 

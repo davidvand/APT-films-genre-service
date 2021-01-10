@@ -43,11 +43,6 @@ public class FilmGenreController {
         return FilmGenreRepository.findByFilm_naamAndGenre_naam(film,genre);
     }
 
-    @GetMapping("/filmGenres/{id}")
-    public Film_Genre getFilmGenreById(@PathVariable Integer id){
-        return FilmGenreRepository.findById(id);
-    }
-
 
 
     @PostMapping("/filmGenres")
@@ -67,9 +62,9 @@ public class FilmGenreController {
         return retrievedFilmGenre;
     }
 
-    @DeleteMapping("/filmGenres/{id}/")
-    public ResponseEntity deleteFilmGenre(@PathVariable Integer id){
-        Film_Genre filmGenre = FilmGenreRepository.findById(id);
+    @DeleteMapping("/filmGenres/{film}/{genre}")
+    public ResponseEntity deleteFilmGenre(@PathVariable String film,@PathVariable String genre){
+        Film_Genre filmGenre = FilmGenreRepository.findByFilm_naamAndGenre_naam(film,genre);
         if(filmGenre!=null){
             FilmGenreRepository.delete(filmGenre);
             return ResponseEntity.ok().build();
